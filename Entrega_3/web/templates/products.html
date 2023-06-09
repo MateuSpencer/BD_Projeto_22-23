@@ -1,26 +1,29 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}Customers{% endblock %}</h1>
+<h1>{% block title %}Products{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
 <div class="add-container">
-    <h2></h1><a href="add_customer_url" class="add-customer-btn">Add Customer</a></h2>
+    <h2></h1><a href="/products/new_product" class="add-btn">Add Product</a></h2>
 </div>
-{% for customer in customers %}
+{% for product in products %}
     <article class="post">
     <header>
         <div>
-            <h1>{{ customer['cust_no'] }}</h1>
-            <div class="about"> {{ customer['name'] }}</div>
+            <h1>Sku: {{ product['sku'] }}</h1>
+            <h3>{{ product['name'] }}</h3>
+            <div class="about"> {{ product['description'] }}</div>
         </div>
     </header>
-    <p class="body">{{ customer['email'] }}</p>
-    <p class="body">{{ customer['phone'] }}</p>
-    <p class="body">{{ customer['adress'] }}</p>
+    <p class="body">{{ product['price'] }}</p>
+    <p class="body">Ean:{{ product['ean'] }}</p>
     <div class="remove-container">
-        <a href="remove_customer_url" class="remove-customer-btn">Remove Customer</a>
+        <form action="/products/remove" method="post">
+            <p><input type="hidden" name="SKU" value="{{ product['sku'] }}"/></p>
+            <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+        </form>
     </div>
     </article>
 {% endfor %}

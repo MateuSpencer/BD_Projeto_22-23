@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}New Product{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form action="/products/new_product/add" method="post">
+    <label for="SKU">SKU:</label>
+    <input type="text" id="SKU" name="SKU" required>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price" required>
+
+    <label for="ean">Ean:</label>
+    <input type="text" id="ean" name="ean">
+
+    <label for="description">description:</label>
+    <textarea id="description" name="description" required></textarea>
+
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

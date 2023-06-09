@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="add-container">
-    <h2></h1><a href="/customers/new_customer" class="add-customer-btn">Add Customer</a></h2>
+    <h2></h1><a href="/customers/new_customer" class="add-btn">Add Customer</a></h2>
 </div>
 {% for customer in customers %}
     <article class="post">
@@ -20,7 +20,10 @@
     <p class="body">{{ customer['phone'] }}</p>
     <p class="body">{{ customer['adress'] }}</p>
     <div class="remove-container">
-        <a href="remove_customer_url" class="remove-customer-btn">Remove Customer</a>
+        <form action="/customers/remove" method="post">
+            <p><input type="hidden" name="cust_no" value="{{ customer['cust_no'] }}"/></p>
+            <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+        </form>
     </div>
     </article>
 {% endfor %}

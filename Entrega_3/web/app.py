@@ -21,6 +21,11 @@ dbConn = psycopg2.connect(DB_CONNECTION_STRING)
 def homepage():
     return render_template("base.html")
 
+
+###########################################################
+#########################CUSTOMERS#########################
+###########################################################
+
 @app.route('/customers')
 def customers():
     """Show all the customers"""
@@ -73,6 +78,117 @@ def create_customer():
         cursor.close()
         dbConn.close()
 
+
+@app.route('/customers/remove', methods=["POST"])
+def remove_customer():
+    dbConn=None
+    cursor=None
+    try:
+        dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+        cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+        query = """
+            DELETE FROM customer
+            WHERE cust_no = %(cust_no)s;
+            """
+
+        data = {
+            "cust_no": request.form["cust_no"]
+        }
+
+        cursor.execute(query, data)
+        
+        return query
+    except Exception as e:
+        return str(e) 
+    finally:
+        dbConn.commit()
+        cursor.close()
+        dbConn.close()
+
+
+###########################################################
+#########################Products##########################
+###########################################################
+
+
+@app.route('/products')
+def products():
+    """Show all the products"""
+    try:
+        dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+        cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+        query = "SELECT * FROM product;"
+        cursor.execute(query)
+        return render_template("products.html", products=cursor)
+    except Exception as e:
+        return e #Renders a page with the error.
+    finally:
+        cursor.close()
+        dbConn.close()
+
+@app.route('/products/new_product')
+def new_product():
+    try:
+        return render_template("new_product.html", params=request.args)
+    except Exception as e:
+        return str(e)
+
+@app.route('/products/new_product/add', methods=["POST"])
+def create_product():
+    dbConn=None
+    cursor=None
+    try:
+        dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+        cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+        query = """
+            INSERT INTO product (SKU, name, description, price, ean)
+            VALUES (%(SKU)s, %(name)s, %(description)s, %(price)s, %(ean)s);
+            """
+
+        data = {
+            "SKU": request.form["SKU"],
+            "name": request.form["name"],
+            "description": request.form["description"],
+            "price": request.form["price"],
+            "ean": request.form["ean"]
+        }
+
+        cursor.execute(query, data)
+        
+        return query
+    except Exception as e:
+        return str(e) 
+    finally:
+        dbConn.commit()
+        cursor.close()
+        dbConn.close()
+
+
+@app.route('/products/remove', methods=["POST"])
+def remove_product():
+    dbConn=None
+    cursor=None
+    try:
+        dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+        cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+        query = """
+            DELETE FROM product
+            WHERE SKU = %(SKU)s;
+            """
+
+        data = {
+            "SKU": request.form["SKU"]
+        }
+
+        cursor.execute(query, data)
+        
+        return query
+    except Exception as e:
+        return str(e) 
+    finally:
+        dbConn.commit()
+        cursor.close()
+        dbConn.close()
 
 if __name__ == '__main__':
     app.run(debug=True)

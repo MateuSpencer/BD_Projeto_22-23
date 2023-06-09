@@ -145,7 +145,7 @@ html {
     margin-bottom: 1rem;
   }
   
-  .add-customer-btn {
+  .add-btn {
     padding: 0.5rem 1rem;
     background-color: #00cc00; /* Green color */
     color: white;
@@ -155,7 +155,7 @@ html {
     font-weight: bold;
   }
 
-  .remove-customer-btn {
+  .remove-btn {
     padding: 0.25rem 0.5rem;
     font-size: 0.9rem;
     background-color: #e74c3c;
