@@ -1,8 +1,27 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}-----------------------{% endblock %}</h1>
+<h1>{% block title %}Customers{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
+<div class="add-container">
+    <h2></h1><a href="add_customer_url" class="add-customer-btn">Add Customer</a></h2>
+</div>
+{% for customer in customers %}
+    <article class="post">
+    <header>
+        <div>
+            <h1>{{ customer['cust_no'] }}</h1>
+            <div class="about"> {{ customer['name'] }}</div>
+        </div>
+    </header>
+    <p class="body">{{ customer['email'] }}</p>
+    <p class="body">{{ customer['phone'] }}</p>
+    <p class="body">{{ customer['adress'] }}</p>
+    <div class="remove-container">
+        <a href="remove_customer_url" class="remove-customer-btn">Remove Customer</a>
+    </div>
+    </article>
+{% endfor %}
 {% endblock %}
