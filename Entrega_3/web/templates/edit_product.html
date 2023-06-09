@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Edit Product{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form action="/products/edit_product/edit" method="post">
+    <h1>Sku: {{ request.form['SKU']}}</h1>
+    <h1>Name: {{ request.form['name']}}</h1>
+    <h1>Ean: {{ request.form['ean']}}</h1>
+
+    <input type="hidden" name="SKU" value="{{ request.form['SKU'] }}"/>
+
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price" required>
+
+    <label for="description">description:</label>
+    <textarea id="description" name="description" required></textarea>
+
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

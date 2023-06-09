@@ -25,6 +25,14 @@
             <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
         </form>
     </div>
+    <div class="edit-container">
+        <form action="/products/edit_product" method="post">
+            <p><input type="hidden" name="SKU" value="{{ product['sku'] }}"/></p>
+            <p><input type="hidden" name="name" value="{{ product['name'] }}"/></p>
+            <p><input type="hidden" name="ean" value="{{ product['ean'] }}"/></p>
+            <input type="submit" value="Edit">
+        </form>
+    </div>
     </article>
 {% endfor %}
 {% endblock %}

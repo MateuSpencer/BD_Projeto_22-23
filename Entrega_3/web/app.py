@@ -189,6 +189,44 @@ def remove_product():
         dbConn.commit()
         cursor.close()
         dbConn.close()
+        
+        
+        
+@app.route('/products/edit_product', methods=["POST"])
+def edit_product():
+    try:
+        return render_template("edit_product.html", params=request.args)
+    except Exception as e:
+        return str(e)
+    
+@app.route('/products/edit_product/edit', methods=["POST"])
+def edit_product_edit():
+    dbConn=None
+    cursor=None
+    try:
+        dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+        cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+        query = """
+            UPDATE product
+            SET price = %(price)s, description = %(description)s
+            WHERE SKU = %(SKU)s;
+            """
+
+        data = {
+            "SKU": request.form["SKU"],
+            "description": request.form["description"],
+            "price": request.form["price"],
+        }
+
+        cursor.execute(query, data)
+        
+        return query
+    except Exception as e:
+        return str(e) 
+    finally:
+        dbConn.commit()
+        cursor.close()
+        dbConn.close()
 
 if __name__ == '__main__':
     app.run(debug=True)
