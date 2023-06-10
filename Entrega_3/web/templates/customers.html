@@ -11,10 +11,8 @@
 {% for customer in customers %}
 <article class="post">
     <header>
-        <div>
-            <h3>{{ customer['cust_no'] }}</h3>
-            <div class="about">{{ customer['name'] }}</div>
-        </div>
+        <h3>{{ customer['cust_no'] }}</h3>
+        <div class="about">{{ customer['name'] }}</div>
     </header>
     <div class="details">
         <p>{{ customer['email'] }}</p>
