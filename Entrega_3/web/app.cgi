@@ -95,7 +95,7 @@ def products():
 def new_product():
     return render_template("new_product.html")
 
-@app.route('/products/new_product/add', methods=["POST"])
+@app.route('/products/new_product/create', methods=["POST"])
 def create_product():
     try:
         query = """
@@ -131,8 +131,8 @@ def remove_product():
 def edit_product():
     return render_template("edit_product.html")
 
-@app.route('/products/edit_product/edit', methods=["POST"])
-def edit_product_edit():
+@app.route('/products/edit_product/update', methods=["POST"])
+def edit_product_update():
     try:
         query = """
             UPDATE product
