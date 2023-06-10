@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<form class="customer-form" action="/products/new_product/add" method="post">
+<form class="customer-form" action="{{ url_for('create_product') }}" method="post">
     <label for="SKU">SKU:</label>
     <input type="text" id="SKU" name="SKU" required>
 

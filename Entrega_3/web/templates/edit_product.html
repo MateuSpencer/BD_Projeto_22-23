@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<form class="customer-form" action="/products/edit_product/edit" method="post">
+<form class="customer-form" action="{{ url_for('edit_product_update') }}" method="post">
     <div class="form-group">
         <h3>Sku: {{ request.form['SKU'] }}</h3>
     </div>

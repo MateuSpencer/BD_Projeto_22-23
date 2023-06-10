@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<form class="customer-form" action="/customers/new_customer/add" method="post">
+<form class="customer-form" action="{{ url_for('create_customer') }}" method="post">
     <label for="cust_no">Customer Number:</label>
     <input type="text" id="cust_no" name="cust_no" required>
 
