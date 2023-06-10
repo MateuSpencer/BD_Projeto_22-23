@@ -5,18 +5,28 @@
 {% endblock %}
 
 {% block content %}
-<form action="/products/edit_product/edit" method="post">
-    <h1>Sku: {{ request.form['SKU']}}</h1>
-    <h1>Name: {{ request.form['name']}}</h1>
-    <h1>Ean: {{ request.form['ean']}}</h1>
+<form class="customer-form" action="/products/edit_product/edit" method="post">
+    <div class="form-group">
+        <h3>Sku: {{ request.form['SKU'] }}</h3>
+    </div>
+    <div class="form-group">
+        <h3>Name: {{ request.form['name'] }}</h3>
+    </div>
+    <div class="form-group">
+        <h3>Ean: {{ request.form['ean'] }}</h3>
+    </div>
 
     <input type="hidden" name="SKU" value="{{ request.form['SKU'] }}"/>
 
-    <label for="price">Price:</label>
-    <input type="text" id="price" name="price" required>
+    <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price">
+    </div>
 
-    <label for="description">description:</label>
-    <textarea id="description" name="description" required></textarea>
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+    </div>
 
     <input type="submit" value="Submit">
 </form>

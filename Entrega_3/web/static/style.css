@@ -1,202 +1,233 @@
-html {
-    font-family: sans-serif;
-    background: #eee;
-    padding: 1rem;
-  }
+/* Reset default styles */
+body, h1, h2, h3, h4, h5, h6, p, ul {
+  margin: 0;
+  padding: 0;
+}
 
-  body {
-    max-width: 960px;
-    margin: 0 auto;
-    background: white;
-  }
+/* Set a clean background color and font */
+body {
+  background-color: #f2f2f2;
+  font-family: Arial, sans-serif;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: serif;
-    color: #377ba8;
-    margin: 1rem 0;
-  }
+/* Style the navigation section */
+nav {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
 
-  a {
-    color: #377ba8;
-  }
+nav h1 {
+  margin: 10px 20px;
+}
 
-  hr {
-    border: none;
-    border-top: 1px solid lightgray;
-  }
+nav a {
+  color: #fff;
+  text-decoration: none;
+}
 
+nav a:hover {
+  text-decoration: underline;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav li {
+  margin: 0 10px;
+}
+
+/* Style the header section */
+header {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the main content section */
+main {
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the footer section */
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Add responsive styles for smaller screens */
+@media (max-width: 768px) {
   nav {
-    background: lightgray;
-    display: flex;
-    align-items: center;
-    padding: 0 0.5rem;
-  }
-
-  nav h1 {
-    flex: auto;
-    margin: 0;
-  }
-
-  nav h1 a {
-    text-decoration: none;
-    padding: 0.25rem 0.5rem;
-  }
-
-  nav ul  {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  nav ul li a, nav ul li span, header .action {
-    display: block;
-    padding: 0.5rem;
-  }
-
-  .content {
-    padding: 0 1rem 1rem;
-  }
-
-  .content > header {
-    border-bottom: 1px solid lightgray;
-    display: flex;
-    align-items: flex-end;
-  }
-
-  .content > header h1 {
-    flex: auto;
-    margin: 1rem 0 0.25rem 0;
-  }
-
-  .flash {
-    margin: 1em 0;
-    padding: 1em;
-    background: #cae6f6;
-    border: 1px solid #377ba8;
-  }
-
-  .post {
-    display: flex;
-  }
-
-  .post > header {
-    display: flex;
-    align-items: flex-end;
-    font-size: 0.85em;
-  }
-
-  .post > header > div:first-of-type {
-    flex: auto;
-  }
-
-  .post > header h1 {
-    font-size: 1.5em;
-    margin-bottom: 0;
-  }
-
-  .post .about {
-    color: slategray;
-    font-style: italic;
-  }
-
-  .post .body {
-    white-space: pre-line;
-    flex: 1;
-    margin: 5px;
-  }
-
-  .content:last-child {
-    margin-bottom: 0;
-  }
-
-  .content form {
-    margin: 1em 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .content label {
-    font-weight: bold;
-    margin-bottom: 0.5em;
-  }
-
-  .content input, .content textarea {
-    margin-bottom: 1em;
-  }
-
-  .content textarea {
-    min-height: 12em;
-    resize: vertical;
-  }
-
-  input.danger {
-    color: #cc2f2e;
-  }
-
-  input[type=submit] {
-    align-self: start;
-    min-width: 10em;
-  }
-
-  .add-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1rem;
-  }
-  
-  .add-btn {
-    padding: 0.5rem 1rem;
-    background-color: #00cc00; /* Green color */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .remove-btn {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.9rem;
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .remove-btn:hover {
-      background-color: #c0392b;
-  }
-
-  form {
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-label {
-    display: block;
-    margin-top: 10px;
-}
-
-input[type="text"], textarea {
-    width: 100%;
     padding: 5px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+  }
+
+  header, main, footer {
+    padding: 10px;
+  }
 }
 
-input[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
+.index-list {
+  list-style-type: none;
+  padding: 0;
 }
 
-input[type="submit"]:hover {
-    background-color: #45a049;
+.index-list li {
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.index-list h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.index-list p {
+  font-size: 16px;
+  color: #555555;
+}
+
+.index-list a {
+  text-decoration: none;
+  color: #333333;
+}
+
+.index-list a:hover {
+  color: #ff6600;
+}
+
+.add-container {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.add-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #34c70f;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.post {
+  background-color: #f2f2f2;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.post header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.post header h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.post header .about {
+  font-size: 16px;
+  color: #888;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove-container {
+  margin-top: 10px;
+}
+
+.danger {
+  background-color: #e0211a;
+  color: #fff;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-container {
+  margin-top: 10px;
+}
+
+.edit-container form {
+  display: inline;
+}
+
+.edit-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.customer-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+}
+
+.customer-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.customer-form input[type="text"],
+.customer-form textarea {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.customer-form input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.customer-form input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.customer-form textarea {
+  height: 100px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+h3 {
+  margin-bottom: 5px;
 }

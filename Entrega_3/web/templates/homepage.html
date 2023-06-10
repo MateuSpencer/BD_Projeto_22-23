@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Homepage{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <h2>Welcome to the Online Retail Manager</h2>
+    <p>Here's a brief description of what you can do on each page:</p>
+    <ul class="index-list">
+        <li>
+            <h3><a href="/customers">Customers</a></h3>
+            <p>Manage Customers by adding new customersand removing existing customers</p>
+        </li>
+        <li>
+            <h3><a href="/products">Products</a></h3>
+            <p>Manage product information, including adding new products, removing existing products aand editing Products price & description</p>
+        </li>
+        <li>
+            <h3><a href="/orders">Orders</a></h3>
+            <p>Manage order information, including creating new orders and paying existing orders</p>
+        </li>
+        <li>
+            <h3><a href="/suppliers">Suppliers</a></h3>
+            <p>Manage Suppliers by adding new suppliers and removing existing suppliers</p>
+        </li>
+    </ul>
+{% endblock %}

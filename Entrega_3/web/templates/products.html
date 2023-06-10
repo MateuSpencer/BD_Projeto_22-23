@@ -6,33 +6,35 @@
 
 {% block content %}
 <div class="add-container">
-    <h2></h1><a href="/products/new_product" class="add-btn">Add Product</a></h2>
+    <h2><a href="/products/new_product" class="add-btn">Add Product</a></h2>
 </div>
 {% for product in products %}
-    <article class="post">
+<article class="post">
     <header>
         <div>
-            <h1>Sku: {{ product['sku'] }}</h1>
-            <h3>{{ product['name'] }}</h3>
-            <div class="about"> {{ product['description'] }}</div>
+            <h3>Sku: {{ product['sku'] }}</h3>
+            <div class="about">{{ product['name'] }}</div>
         </div>
     </header>
-    <p class="body">{{ product['price'] }}</p>
-    <p class="body">Ean:{{ product['ean'] }}</p>
-    <div class="remove-container">
-        <form action="/products/remove" method="post">
-            <p><input type="hidden" name="SKU" value="{{ product['sku'] }}"/></p>
-            <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-        </form>
+    <div class="details">
+        <p>{{ product['description'] }}</p>
+        <p>{{ product['price'] }}</p>
+        <p>Ean: {{ product['ean'] }}</p>
+        <div class="edit-container">
+            <form action="/products/edit_product" method="post">
+                <input type="hidden" name="SKU" value="{{ product['sku'] }}">
+                <input type="hidden" name="name" value="{{ product['name'] }}">
+                <input type="hidden" name="ean" value="{{ product['ean'] }}">
+                <input class="edit-btn" type="submit" value="Edit">
+            </form>
+        </div>
+        <div class="remove-container">
+            <form action="/products/remove" method="post">
+                <input type="hidden" name="SKU" value="{{ product['sku'] }}">
+                <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+            </form>
+        </div>
     </div>
-    <div class="edit-container">
-        <form action="/products/edit_product" method="post">
-            <p><input type="hidden" name="SKU" value="{{ product['sku'] }}"/></p>
-            <p><input type="hidden" name="name" value="{{ product['name'] }}"/></p>
-            <p><input type="hidden" name="ean" value="{{ product['ean'] }}"/></p>
-            <input type="submit" value="Edit">
-        </form>
-    </div>
-    </article>
+</article>
 {% endfor %}
 {% endblock %}
