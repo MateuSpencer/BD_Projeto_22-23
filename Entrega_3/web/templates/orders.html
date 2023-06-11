@@ -27,8 +27,8 @@
             {% if order['order_no'] == payed['order_no'] %}
             <div class="remove-container">
                 <form action="{{ url_for('pay_order') }}" method="post">
-                <input type="hidden" name="order_no" value="{{ orders['order_no'] }}">
-                <input type="hidden" name="cust_no" value="{{ orders['cust_no'] }}">
+                <input type="hidden" name="order_no" value="{{ order['order_no'] }}">
+                <input type="hidden" name="cust_no" value="{{ order['cust_no'] }}">
                 <input class="pay" type="submit" value="Pay" onclick="return confirm('Are you sure you want this order to be paid?');">
                 </form>
             </div>
