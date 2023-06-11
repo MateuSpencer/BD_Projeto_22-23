@@ -50,29 +50,6 @@ def customers():
 def new_customer():
     return render_template("new_customer.html")
 
-@app.route('/suppliers/new_supplier')
-def new_supplier():
-    return render_template("new_supplier.html")
-
-@app.route('/products/new_supplier/create', methods=["POST"])
-def create_supplier():
-    try:
-        query = """
-            INSERT INTO supplier (TIN, name, address, SKU, date)
-            VALUES (%(TIN)s, %(name)s, %(address)s, %(SKU)s, %(date)s);
-            """
-        data = {
-            "SKU": request.form["SKU"],
-            "name": request.form["name"],
-            "address": request.form["address"],
-            "date": request.form["date"],
-            "TIN": request.form["TIN"]
-        }
-        execute_query(query, data, fetch=False)
-        return redirect(url_for('suppliers'))
-    except Exception as e:
-        return str(e)
-
 @app.route('/customers/new_customer/add', methods=["POST"])
 def create_customer():
     try:
@@ -134,6 +111,10 @@ def products():
 def new_product():
     return render_template("new_product.html")
 
+@app.route('/suppliers/new_supplier')
+def new_supplier():
+    return render_template("new_supplier.html")
+
 @app.route('/products/new_product/create', methods=["POST"])
 def create_product():
     try:
@@ -152,6 +133,26 @@ def create_product():
         return redirect(url_for('products'))
     except Exception as e:
         return str(e)
+    
+@app.route('/products/new_supplier/create', methods=["POST"])
+def create_supplier():
+    try:
+        query = """
+            INSERT INTO supplier (TIN, name, address, SKU, date)
+            VALUES (%(TIN)s, %(name)s, %(address)s, %(SKU)s, %(date)s);
+            """
+        data = {
+            "SKU": request.form["SKU"],
+            "name": request.form["name"],
+            "address": request.form["address"],
+            "date": request.form["date"],
+            "TIN": request.form["TIN"]
+        }
+        execute_query(query, data, fetch=False)
+        return redirect(url_for('suppliers'))
+    except Exception as e:
+        return str(e)
+
 
 @app.route('/products/remove', methods=["POST"])
 def remove_product():
@@ -191,7 +192,7 @@ def edit_product_update():
         return redirect(url_for('products'))
     except Exception as e:
         return str(e)
-    
+
 @app.route('/suppliers')
 def suppliers():
     try:
@@ -204,11 +205,13 @@ def suppliers():
 @app.route('/orders')
 def orders():
     try:
-        query = """SELECT *
-                    FROM orders
-                    JOIN contains ON orders.order_no = contains.order_no;"""
+        query = "SELECT * FROM orders;"
         orders = execute_query(query)
-        return render_template("orders.html", orders=orders)
+        query = "SELECT * FROM contains;"
+        contains = execute_query(query)
+        query = "SELECT * FROM pay;"
+        pay = execute_query(query)
+        return render_template("orders.html", orders=orders, contains=contains, pay=pay)
     except Exception as e:
         return str(e)
     
@@ -220,14 +223,14 @@ def new_order():
 def create_order():
     try:
         query = """
-            INSERT INTO orders (order_no, cust_name, date)
-            VALUES (%(order_no)s, %(cust_name)s, %(date)s);
-            INSERT INTO contais (order_no, SKU, qty)
+            INSERT INTO orders (order_no, cust_no, date)
+            VALUES (%(order_no)s, %(cust_no)s, %(date)s);
+            INSERT INTO contains (order_no, SKU, qty)
             VALUES (%(order_no)s, %(SKU)s, %(qty)s);
             """
         data = {
             "order_no": request.form["order_no"],
-            "cust_name": request.form["cust_name"],
+            "cust_no": request.form["cust_no"],
             "date": request.form["date"],
             "SKU": request.form["SKU"],
             "qty": request.form["qty"]
@@ -261,12 +264,12 @@ def edit_order():
 def edit_order_update():
     try:
         query = """
-            INSERT INTO contains (order_no, cust_no, qty)
-            VALUES (%(order_no)s, %(cust_no)s);
+            INSERT INTO contains (order_no, SKU, qty)
+            VALUES (%(order_no)s, %(SKU)s, %(qty)s);
             """
         data = {
             "order_no": request.form["order_no"],
-            "cust_no": request.form["cust_no"],
+            "SKU": request.form["SKU"],
             "qty": request.form["qty"],
         }
         execute_query(query, data, fetch=False)
