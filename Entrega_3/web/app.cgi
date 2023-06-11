@@ -154,6 +154,10 @@ def create_product():
 def remove_product():
     try:
         query = """
+            DELETE FROM contains
+            WHERE SKU = %(SKU)s;
+            DELETE FROM supplier
+            WHERE SKU = %(SKU)s;
             DELETE FROM product
             WHERE SKU = %(SKU)s;
             """
