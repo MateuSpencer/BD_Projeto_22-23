@@ -12,7 +12,7 @@
 <article class="post">
     <header>
         <h3>Order: {{ order['order_no'] }}</h3>
-        <div class="about">Customer: {{ orders['cust_no'] }}</div>
+        <div class="about">Customer: {{ order['cust_no'] }}</div>
         <div class="about">Date: {{ order['date'] }}</div>
     </header>
     <div class="details">
@@ -33,6 +33,13 @@
                 </form>
             </div>
         {% endfor %}
+        <div class="edit-container">
+            <form action="{{ url_for('edit_order') }}" method="post">
+                <input type="hidden" name="order_no" value="{{ order['order_no'] }}">
+                <input type="hidden" name="cust_no" value="{{ order['cust_no'] }}">
+                <input class="edit-btn" type="submit" value="Add +">
+            </form>
+        </div>
     </div>
 </article>
 {% endfor %}

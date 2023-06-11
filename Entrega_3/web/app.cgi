@@ -204,17 +204,38 @@ def suppliers():
 @app.route('/orders')
 def orders():
     try:
-        query = "SELECT * FROM orders;"
+        query = """SELECT *
+                    FROM orders
+                    JOIN contains ON orders.order_no = contains.order_no;"""
         orders = execute_query(query)
-        query = "SELECT * FROM contains;"
-        contains = execute_query(query)
-        return render_template("orders.html", orders=orders, contains=contains)
+        return render_template("orders.html", orders=orders)
     except Exception as e:
         return str(e)
     
 @app.route('/products/new_order')
 def new_order():
     return render_template("new_order.html")
+
+@app.route('/products/new_order/create', methods=["POST"])
+def create_order():
+    try:
+        query = """
+            INSERT INTO orders (order_no, cust_name, date)
+            VALUES (%(order_no)s, %(cust_name)s, %(date)s);
+            INSERT INTO contais (order_no, SKU, qty)
+            VALUES (%(order_no)s, %(SKU)s, %(qty)s);
+            """
+        data = {
+            "order_no": request.form["order_no"],
+            "cust_name": request.form["cust_name"],
+            "date": request.form["date"],
+            "SKU": request.form["SKU"],
+            "qty": request.form["qty"]
+        }
+        execute_query(query, data, fetch=False)
+        return redirect(url_for('orders'))
+    except Exception as e:
+        return str(e)
 
 @app.route('/orders/pay', methods=["POST"])
 def pay_order():
@@ -232,6 +253,26 @@ def pay_order():
     except Exception as e:
         return str(e)
 
+@app.route('/products/edit_order', methods=["POST"])
+def edit_order():
+    return render_template("edit_order.html")
+
+@app.route('/products/edit_order/update', methods=["POST"])
+def edit_order_update():
+    try:
+        query = """
+            INSERT INTO contains (order_no, cust_no, qty)
+            VALUES (%(order_no)s, %(cust_no)s);
+            """
+        data = {
+            "order_no": request.form["order_no"],
+            "cust_no": request.form["cust_no"],
+            "qty": request.form["qty"],
+        }
+        execute_query(query, data, fetch=False)
+        return redirect(url_for('orders'))
+    except Exception as e:
+        return str(e)
 
 if __name__ == '__main__':
     CGIHandler().run(app)

@@ -219,34 +219,20 @@ def new_order():
 @app.route('/products/new_order/create', methods=["POST"])
 def create_order():
     try:
-        query_order = """
-            INSERT INTO orders (order_no, cust_no, date)
-            VALUES (%(order_no)s, %(cust_no)s, %(date)s);
+        query = """
+            INSERT INTO orders (order_no, cust_name, date)
+            VALUES (%(order_no)s, %(cust_name)s, %(date)s);
+            INSERT INTO contais (order_no, SKU, qty)
+            VALUES (%(order_no)s, %(SKU)s, %(qty)s);
             """
-        #TODO: nao consegue retirar isto do request
-        data_order = {
+        data = {
             "order_no": request.form["order_no"],
-            "cust_no": request.form["cust_no"],
+            "cust_name": request.form["cust_name"],
             "date": request.form["date"],
+            "SKU": request.form["SKU"],
+            "qty": request.form["qty"]
         }
-        
-        execute_query(query_order, data_order, fetch=False)
-        
-        sku_list = request.form.getlist('SKU[]')
-        quantity_list = request.form.getlist('quantity[]')
-
-        for i in range(len(sku_list)):
-            query_contains = """
-                INSERT INTO contains (order_no, SKU, quantity)
-                VALUES (%(order_no)s, %(SKU)s, %(quantity)s);
-            """
-            data_contains = {
-                "order_no": request.form["order_no"],
-                "SKU": sku_list[i],
-                "quantity": quantity_list[i],
-            }
-            execute_query(query_contains, data_contains, fetch=False)
-        
+        execute_query(query, data, fetch=False)
         return redirect(url_for('orders'))
     except Exception as e:
         return str(e)
@@ -267,6 +253,26 @@ def pay_order():
     except Exception as e:
         return str(e)
 
+@app.route('/products/edit_order', methods=["POST"])
+def edit_order():
+    return render_template("edit_order.html")
+
+@app.route('/products/edit_order/update', methods=["POST"])
+def edit_order_update():
+    try:
+        query = """
+            INSERT INTO contains (order_no, SKU, qty)
+            VALUES (%(order_no)s, %(SKU)s, %(qty)s);
+            """
+        data = {
+            "order_no": request.form["order_no"],
+            "SKU": request.form["SKU"],
+            "qty": request.form["qty"],
+        }
+        execute_query(query, data, fetch=False)
+        return redirect(url_for('orders'))
+    except Exception as e:
+        return str(e)
 
 if __name__ == '__main__':
     app.run(debug=True)
