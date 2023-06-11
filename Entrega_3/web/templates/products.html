@@ -18,7 +18,7 @@
     </header>
     <div class="details">
         <p>{{ product['description'] }}</p>
-        <p>{{ product['price'] }}</p>
+        <p>Price: {{ product['price'] }}</p>
         <p>Ean: {{ product['ean'] }}</p>
         <div class="edit-container">
             <form action="{{ url_for('edit_product') }}" method="post">

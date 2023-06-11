@@ -169,7 +169,12 @@ VALUES (1, 'SKU001', 2),
        (4, 'SKU002', 2),
        (5, 'SKU001', 2),
        (5, 'SKU002', 1),
-       (5, 'SKU003', 2);
+       (5, 'SKU003', 2),
+       (6, 'SKU003', 1),
+       (7, 'SKU003', 1),
+       (8, 'SKU003', 1),
+       (9, 'SKU003', 1),
+       (10, 'SKU003', 1);
        
 INSERT INTO workplace (address, lat, long)
 VALUES

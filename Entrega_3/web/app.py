@@ -198,6 +198,22 @@ def suppliers():
         return render_template("suppliers.html", suppliers=suppliers)
     except Exception as e:
         return str(e)
+    
+@app.route('/orders')
+def orders():
+    try:
+        query = """SELECT *
+                    FROM orders
+                    JOIN contains ON orders.order_no = contains.order_no;"""
+        orders = execute_query(query)
+        return render_template("orders.html", orders=orders)
+    except Exception as e:
+        return str(e)
+    
+@app.route('/products/new_order')
+def new_order():
+    return render_template("new_order.html")
+
 
 if __name__ == '__main__':
     app.run(debug=True)
