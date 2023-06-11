@@ -220,14 +220,14 @@ def new_order():
 def create_order():
     try:
         query = """
-            INSERT INTO orders (order_no, cust_name, date)
-            VALUES (%(order_no)s, %(cust_name)s, %(date)s);
-            INSERT INTO contais (order_no, SKU, qty)
+            INSERT INTO orders (order_no, cust_no, date)
+            VALUES (%(order_no)s, %(cust_no)s, %(date)s);
+            INSERT INTO contains (order_no, SKU, qty)
             VALUES (%(order_no)s, %(SKU)s, %(qty)s);
             """
         data = {
             "order_no": request.form["order_no"],
-            "cust_name": request.form["cust_name"],
+            "cust_no": request.form["cust_no"],
             "date": request.form["date"],
             "SKU": request.form["SKU"],
             "qty": request.form["qty"]
