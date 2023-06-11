@@ -1,8 +1,30 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}-----------------------{% endblock %}</h1>
+<h1>{% block title %}Suppliers{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
+<div class="add-container">
+    <h2><a href="{{ url_for('new_supplier') }}" class="add-btn">Add Supplier</a></h2>
+</div>
+{% for supplier in suppliers %}
+<article class="post">
+    <header>
+        <h3>{{ supplier['TIN'] }}</h3>
+        <div class="about">{{ supplier['name'] }}</div>
+    </header>
+    <div class="details">
+        <p>{{ supplier['SKU'] }}</p>
+        <p>{{ supplier['date'] }}</p>
+        <p>{{ supplier['address'] }}</p>
+        <div class="remove-container">
+            <form action="{{ url_for('remove_supplier') }}" method="post">
+            <input type="hidden" name="TIN" value="{{ supplier['TIN'] }}">
+            <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+            </form>
+        </div>
+    </div>
+</article>
+{% endfor %}
 {% endblock %}

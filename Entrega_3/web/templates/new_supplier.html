@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}New Supplier{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form class="supplier-form" action="{{ url_for('create_supplier') }}" method="post">
+    <label for="TIN">TIN:</label>
+    <input type="text" id="TIN" name="TIN" required>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="date">Date:</label>
+    <input type="text" id="date" name="date" required>
+
+    <label for="SKU">SKU:</label>
+    <input type="text" id="SKU" name="SKU" required>
+
+    <label for="address">Address:</label>
+    <textarea id="address" name="address" required></textarea>
+
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

@@ -9,9 +9,9 @@ app = Flask(__name__)
 
 # SGBD configs
 DB_HOST = "db.tecnico.ulisboa.pt"
-DB_USER = "ist1100032"
+DB_USER = "ist1100070"
 DB_DATABASE = DB_USER
-DB_PASSWORD = "projbd22-23"
+DB_PASSWORD = "tgpt8279"
 DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (
     DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD
 )
@@ -50,6 +50,29 @@ def customers():
 def new_customer():
     return render_template("new_customer.html")
 
+@app.route('/suppliers/new_supplier')
+def new_supplier():
+    return render_template("new_supplier.html")
+
+@app.route('/products/new_supplier/create', methods=["POST"])
+def create_supplier():
+    try:
+        query = """
+            INSERT INTO supplier (TIN, name, address, SKU, date)
+            VALUES (%(TIN)s, %(name)s, %(address)s, %(SKU)s, %(date)s);
+            """
+        data = {
+            "SKU": request.form["SKU"],
+            "name": request.form["name"],
+            "address": request.form["address"],
+            "date": request.form["date"],
+            "TIN": request.form["TIN"]
+        }
+        execute_query(query, data, fetch=False)
+        return redirect(url_for('suppliers'))
+    except Exception as e:
+        return str(e)
+
 @app.route('/customers/new_customer/add', methods=["POST"])
 def create_customer():
     try:
@@ -79,6 +102,19 @@ def remove_customer():
         data = {"cust_no": request.form["cust_no"]}
         execute_query(query, data, fetch=False)
         return redirect(url_for('customers'))
+    except Exception as e:
+        return str(e)
+    
+@app.route('/suppliers/remove', methods=["POST"])
+def remove_supplier():
+    try:
+        query = """
+            DELETE FROM supplier
+            WHERE TIN = %(TIN)s;
+            """
+        data = {"TIN": request.form["TIN"]}
+        execute_query(query, data, fetch=False)
+        return redirect(url_for('suppliers'))
     except Exception as e:
         return str(e)
 
@@ -146,6 +182,15 @@ def edit_product_update():
         }
         execute_query(query, data, fetch=False)
         return redirect(url_for('products'))
+    except Exception as e:
+        return str(e)
+    
+@app.route('/suppliers')
+def suppliers():
+    try:
+        query = "SELECT * FROM supplier;"
+        suppliers = execute_query(query)
+        return render_template("suppliers.html", suppliers=suppliers)
     except Exception as e:
         return str(e)
 
