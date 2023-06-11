@@ -216,5 +216,22 @@ def orders():
 def new_order():
     return render_template("new_order.html")
 
+@app.route('/orders/pay', methods=["POST"])
+def pay_order():
+    try:
+        query = """
+            INSERT INTO pay (order_no, cust_no)
+            VALUES (%(order_no)s, %(cust_no)s);
+            """
+        data = {
+            "order_no": request.form["order_no"],
+            "cust_no": request.form["cust_no"],
+        }
+        execute_query(query, data, fetch=False)
+        return redirect(url_for('orders'))
+    except Exception as e:
+        return str(e)
+
+
 if __name__ == '__main__':
     CGIHandler().run(app)
