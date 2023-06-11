@@ -206,7 +206,9 @@ def orders():
         orders = execute_query(query)
         query = "SELECT * FROM contains;"
         contains = execute_query(query)
-        return render_template("orders.html", orders=orders, contains=contains)
+        query = "SELECT * FROM pay;"
+        pay = execute_query(query)
+        return render_template("orders.html", orders=orders, contains=contains, pay=pay)
     except Exception as e:
         return str(e)
     
