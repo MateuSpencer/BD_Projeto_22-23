@@ -8,16 +8,20 @@
 <div class="add-container">
     <h2><a href="{{ url_for('new_order') }}" class="add-btn">New Order</a></h2>
 </div>
-{% for orders in orders %}
+{% for order in orders %}
 <article class="post">
     <header>
-        <h3>Order: {{ orders['order_no'] }}</h3>
+        <h3>Order: {{ order['order_no'] }}</h3>
         <div class="about">Customer: {{ orders['cust_no'] }}</div>
+        <div class="about">Date: {{ order['date'] }}</div>
     </header>
     <div class="details">
-        <p>{{ orders['date'] }}</p>
-        <p>Product: {{ orders['sku'] }}</p>
-        <p>Quantity: {{ orders['qty'] }}</p>
+        {% for contain in contains %}
+            {% if order['order_no'] == contain['order_no'] %}
+            <p class = "contain">Product: {{ contain['sku'] }}</p>
+            <p class = "contain">Quantity: {{ contain['qty'] }}</p>
+            {%endif%}
+        {% endfor %}
         <div class="remove-container">
             <form action="{{ url_for('remove_supplier') }}" method="post">
             <input type="hidden" name="TIN" value="{{ orders['order_no'] }}">

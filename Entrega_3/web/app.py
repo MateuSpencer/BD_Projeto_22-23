@@ -202,11 +202,11 @@ def suppliers():
 @app.route('/orders')
 def orders():
     try:
-        query = """SELECT *
-                    FROM orders
-                    JOIN contains ON orders.order_no = contains.order_no;"""
+        query = "SELECT * FROM orders;"
         orders = execute_query(query)
-        return render_template("orders.html", orders=orders)
+        query = "SELECT * FROM contains;"
+        contains = execute_query(query)
+        return render_template("orders.html", orders=orders, contains=contains)
     except Exception as e:
         return str(e)
     
