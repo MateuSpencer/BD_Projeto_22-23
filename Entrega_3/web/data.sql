@@ -187,3 +187,9 @@ INSERT INTO warehouse (address)
 VALUES
   ('4000-033 Porto'),
   ('4700-012 Braga');
+
+INSERT INTO supplier (TIN, name, address, SKU, date)
+VALUES
+  ('S1', 'Supplier 1', '4000-033 Porto', 'SKU001', '06-01-2022'),
+  ('S2', 'Supplier 2', '4000-033 Porto', 'SKU002', '08-01-2022'),
+  ('S4', 'Supplier 4', '4000-033 Porto', 'SKU001', '10-02-2022');

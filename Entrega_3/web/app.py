@@ -70,8 +70,11 @@ def create_customer():
 def remove_customer():
     try:
         query = """
-            DELETE FROM customer
-            WHERE cust_no = %(cust_no)s;
+            DELETE FROM pay WHERE order_no IN (SELECT order_no FROM orders WHERE cust_no = %(cust_no)s);
+            DELETE FROM process WHERE order_no IN (SELECT order_no FROM orders WHERE cust_no = %(cust_no)s);
+            DELETE FROM contains WHERE order_no IN (SELECT order_no FROM orders WHERE cust_no = %(cust_no)s);
+            DELETE FROM orders WHERE cust_no = %(cust_no)s;
+            DELETE FROM customer WHERE cust_no = %(cust_no)s;
             """
         data = {"cust_no": request.form["cust_no"]}
         execute_query(query, data, fetch=False)
