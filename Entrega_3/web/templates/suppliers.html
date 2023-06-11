@@ -15,12 +15,12 @@
         <div class="about">{{ supplier['name'] }}</div>
     </header>
     <div class="details">
-        <p>{{ supplier['SKU'] }}</p>
+        <p>{{ supplier['sku'] }}</p>
         <p>{{ supplier['date'] }}</p>
         <p>{{ supplier['address'] }}</p>
         <div class="remove-container">
             <form action="{{ url_for('remove_supplier') }}" method="post">
-            <input type="hidden" name="TIN" value="{{ supplier['TIN'] }}">
+            <input type="hidden" name="TIN" value="{{ supplier['tin'] }}">
             <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
             </form>
         </div>
