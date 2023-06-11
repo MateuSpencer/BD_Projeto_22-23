@@ -15,12 +15,53 @@
     <label for="date">Date:</label>
     <input type="text" id="date" name="date" required>
 
-    <label for="SKU">SKU:</label>
-    <input type="text" id="SKU" name="SKU" required>
+    <div id="sku-quantity-container">
+        <div class="sku-quantity-pair">
+            <label for="SKU">SKU:</label>
+            <input type="text" class="sku-input" name="SKU[]" required>
 
-    <label for="qty">Quantity:</label>
-    <input type="text" id="qty" name="qty" required>
+            <label for="qty">Quantity:</label>
+            <input type="text" class="quantity-input" name="quantity[]" required>
+        </div>
+    </div>
+
+    <button type="button" id="add-pair-btn">Add New Product</button>
 
     <input type="submit" value="Submit">
 </form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addPairButton = document.getElementById('add-pair-btn');
+        const container = document.getElementById('sku-quantity-container');
+
+        addPairButton.addEventListener('click', function() {
+            const pair = document.createElement('div');
+            pair.className = 'sku-quantity-pair';
+
+            const skuLabel = document.createElement('label');
+            skuLabel.textContent = 'SKU:';
+            const skuInput = document.createElement('input');
+            skuInput.type = 'text';
+            skuInput.className = 'sku-input';
+            skuInput.name = 'SKU[]';
+            skuInput.required = true;
+
+            const quantityLabel = document.createElement('label');
+            quantityLabel.textContent = 'Quantity:';
+            const quantityInput = document.createElement('input');
+            quantityInput.type = 'text';
+            quantityInput.className = 'quantity-input';
+            quantityInput.name = 'quantity[]';
+            quantityInput.required = true;
+
+            pair.appendChild(skuLabel);
+            pair.appendChild(skuInput);
+            pair.appendChild(quantityLabel);
+            pair.appendChild(quantityInput);
+
+            container.appendChild(pair);
+        });
+    });
+</script>
 {% endblock %}

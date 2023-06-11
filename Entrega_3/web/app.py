@@ -216,33 +216,37 @@ def orders():
 def new_order():
     return render_template("new_order.html")
 
-@app.route('/products/new_ordercreate', methods=["POST"])
+@app.route('/products/new_order/create', methods=["POST"])
 def create_order():
     try:
         query_order = """
             INSERT INTO orders (order_no, cust_no, date)
             VALUES (%(order_no)s, %(cust_no)s, %(date)s);
             """
+        #TODO: nao consegue retirar isto do request
         data_order = {
             "order_no": request.form["order_no"],
             "cust_no": request.form["cust_no"],
             "date": request.form["date"],
         }
         
-        for x in x:
+        execute_query(query_order, data_order, fetch=False)
+        
+        sku_list = request.form.getlist('SKU[]')
+        quantity_list = request.form.getlist('quantity[]')
+
+        for i in range(len(sku_list)):
             query_contains = """
                 INSERT INTO contains (order_no, SKU, quantity)
                 VALUES (%(order_no)s, %(SKU)s, %(quantity)s);
-                """
-            #TODO: passar tipo tuplos da info para os contains e aqui iterar por elas e adicionar
+            """
             data_contains = {
                 "order_no": request.form["order_no"],
-                "SKU": request.form["SKU"],
-                "quantity": request.form["quantity"],
+                "SKU": sku_list[i],
+                "quantity": quantity_list[i],
             }
             execute_query(query_contains, data_contains, fetch=False)
         
-        execute_query(query_order, data_order, fetch=False)
         return redirect(url_for('orders'))
     except Exception as e:
         return str(e)
