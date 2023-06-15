@@ -1,3 +1,56 @@
+-- (RI-1)
+ALTER TABLE employee
+ADD CHECK (employee.bdate < (CURRENT_TIMESTAMP - INTERVAL '18 years'));
+
+-- (RI-2)
+DROP TRIGGER IF EXISTS check_workplace_type_trigger ON workplace;
+
+CREATE OR REPLACE FUNCTION check_workplace_type()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Verifica se o address já existe na tabela Office
+  IF EXISTS (SELECT 1 FROM office WHERE address = NEW.address) THEN
+    -- Verifica se o address também existe na tabela Warehouse
+    IF EXISTS (SELECT 1 FROM warehouse WHERE address = NEW.address) THEN
+      RAISE EXCEPTION 'O Workplace não pode ser tanto um Office quanto um Warehouse.';
+    END IF;
+  ELSE
+    -- Verifica se o address não existe na tabela Warehouse
+    IF NOT EXISTS (SELECT 1 FROM warehouse WHERE address = NEW.address) THEN
+      RAISE EXCEPTION 'O Workplace deve ser um Office ou um Warehouse.';
+    END IF;
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE CONSTRAINT TRIGGER check_workplace_type_trigger
+AFTER INSERT OR UPDATE ON workplace
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW
+EXECUTE FUNCTION check_workplace_type();
+
+-- (RI-3)
+DROP TRIGGER IF EXISTS check_contains_order_trigger ON orders;
+
+CREATE OR REPLACE FUNCTION check_contains_order()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM contains WHERE order_no = NEW.order_no) THEN
+    RAISE EXCEPTION 'Uma Order tem de estar obrigatoriamente em Contain.';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE CONSTRAINT TRIGGER check_contains_order_trigger
+AFTER INSERT OR UPDATE ON orders
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW
+EXECUTE FUNCTION check_contains_order();
+
+
 DROP TABLE IF EXISTS customer CASCADE;
 DROP TABLE IF EXISTS orders CASCADE;
 DROP TABLE IF EXISTS pay CASCADE;
@@ -111,7 +164,14 @@ VALUES (1, 'Cliente A', 'clienteA@example.com', '123456789', '1000-008 Lisboa'),
        (3, 'Cliente C', 'clienteC@example.com', '456789123', '3000-030 Coimbra'),
        (4, 'Cliente D', 'clienteD@example.com', '987654321', '8000-073 Faro'),
        (5, 'Cliente E', 'clienteE@example.com', '123456789', '4700-024 Braga');
-       
+
+INSERT INTO product (SKU, name, description, price, ean)
+VALUES ('SKU001', 'Produto 1', 'Descrição do Produto 1', 10.99, 1234567890123),
+       ('SKU002', 'Produto 2', 'Descrição do Produto 2', 19.99, 9876543210987),
+       ('SKU003', 'Produto 3', 'Descrição do Produto 3', 5.99, 5678901234567);
+
+START TRANSACTION; 
+
 INSERT INTO orders (order_no, cust_no, date)
 VALUES (1, 1, '2022-01-10'),
        (2, 1, '2022-02-15'),
@@ -123,6 +183,29 @@ VALUES (1, 1, '2022-01-10'),
        (8, 5, '2022-01-05'),
        (9, 5, '2022-03-20'),
        (10, 5, '2022-04-12');
+
+INSERT INTO contains (order_no, SKU, qty)
+VALUES (1, 'SKU001', 2),
+       (1, 'SKU002', 1),
+       (2, 'SKU003', 3),
+       (2, 'SKU001', 1),
+       (2, 'SKU002', 2),
+       (3, 'SKU001', 5),
+       (3, 'SKU002', 3),
+       (3, 'SKU003', 6),
+       (4, 'SKU003', 4),
+       (4, 'SKU001', 3),
+       (4, 'SKU002', 2),
+       (5, 'SKU001', 2),
+       (5, 'SKU002', 1),
+       (5, 'SKU003', 2),
+       (6, 'SKU003', 1),
+       (7, 'SKU003', 1),
+       (8, 'SKU003', 1),
+       (9, 'SKU003', 1),
+       (10, 'SKU003', 1);
+
+COMMIT;
 
 INSERT INTO pay (order_no, cust_no)
 VALUES (1, 1),
@@ -150,32 +233,8 @@ VALUES ('SSN001', 1),
        ('SSN005', 1);
        --Problem dois employyes processarem a mesma oorder?
 
-INSERT INTO product (SKU, name, description, price, ean)
-VALUES ('SKU001', 'Produto 1', 'Descrição do Produto 1', 10.99, 1234567890123),
-       ('SKU002', 'Produto 2', 'Descrição do Produto 2', 19.99, 9876543210987),
-       ('SKU003', 'Produto 3', 'Descrição do Produto 3', 5.99, 5678901234567);
+START TRANSACTION; 
 
-INSERT INTO contains (order_no, SKU, qty)
-VALUES (1, 'SKU001', 2),
-       (1, 'SKU002', 1),
-       (2, 'SKU003', 3),
-       (2, 'SKU001', 1),
-       (2, 'SKU002', 2),
-       (3, 'SKU001', 5),
-       (3, 'SKU002', 3),
-       (3, 'SKU003', 6),
-       (4, 'SKU003', 4),
-       (4, 'SKU001', 3),
-       (4, 'SKU002', 2),
-       (5, 'SKU001', 2),
-       (5, 'SKU002', 1),
-       (5, 'SKU003', 2),
-       (6, 'SKU003', 1),
-       (7, 'SKU003', 1),
-       (8, 'SKU003', 1),
-       (9, 'SKU003', 1),
-       (10, 'SKU003', 1);
-       
 INSERT INTO workplace (address, lat, long)
 VALUES
   ('1000-048 Lisboa', 40.123456, -74.123456),
@@ -192,6 +251,8 @@ INSERT INTO warehouse (address)
 VALUES
   ('4000-033 Porto'),
   ('4700-012 Braga');
+
+COMMIT;
 
 INSERT INTO supplier (TIN, name, address, SKU, date)
 VALUES
