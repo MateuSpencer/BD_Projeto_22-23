@@ -9,9 +9,9 @@ app = Flask(__name__)
 
 # SGBD configs
 DB_HOST = "db.tecnico.ulisboa.pt"
-DB_USER = "ist1100070"
+DB_USER = "ist1100032"
 DB_DATABASE = DB_USER
-DB_PASSWORD = "tgpt8279"
+DB_PASSWORD = "projbd22-23"
 DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (
     DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD
 )
