@@ -214,7 +214,14 @@ def orders():
     
 @app.route('/products/new_order')
 def new_order():
-    return render_template("new_order.html")
+    try:
+        query = "SELECT MAX(order_no) FROM orders;"
+        order_no_list = execute_query(query)
+        order_no = order_no_list[0][0]
+        new_order_no = int(order_no) + 1
+        return render_template("new_order.html", new_order_no=new_order_no)
+    except Exception as e:
+        return str(e)
 
 @app.route('/products/new_order/create', methods=["POST"])
 def create_order():

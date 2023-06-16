@@ -6,8 +6,10 @@
 
 {% block content %}
 <form class="customer-form" action="{{ url_for('create_order') }}" method="post">
-    <label for="order_no">Order Number:</label>
-    <input type="text" id="order_no" name="order_no" required>
+    <div class="form-group">
+        <h3>Order Number: {{ new_order_no }}</h3>
+    </div>
+    <input type="hidden" name="order_no" value="{{ new_order_no }}"/>
 
     <label for="cust_no">Customer Number:</label>
     <input type="text" id="cust_no" name="cust_no" required>
