@@ -166,9 +166,9 @@ VALUES (1, 'Cliente A', 'clienteA@example.com', '123456789', '1000-008 Lisboa'),
        (5, 'Cliente E', 'clienteE@example.com', '123456789', '4700-024 Braga');
 
 INSERT INTO product (SKU, name, description, price, ean)
-VALUES ('SKU001', 'Produto 1', 'Descrição do Produto 1', 10.99, 1234567890123),
-       ('SKU002', 'Produto 2', 'Descrição do Produto 2', 19.99, 9876543210987),
-       ('SKU003', 'Produto 3', 'Descrição do Produto 3', 5.99, 5678901234567);
+VALUES ('TSH-000-S', 'T-shirt', 'T-shirt preta de tamanho S', 10.99, 1234567890123),
+       ('SHO-FFF-EU37', 'Sapatos', 'Sapatos brancos de tamanho 37 europeu', 19.99, 9876543210987),
+       ('GLO-FF0000-M', 'Luvas', 'Luvas vermelhas de tamanho M', 5.99, 5678901234567);
 
 START TRANSACTION; 
 
@@ -185,25 +185,25 @@ VALUES (1, 1, '2022-01-10'),
        (10, 5, '2022-04-12');
 
 INSERT INTO contains (order_no, SKU, qty)
-VALUES (1, 'SKU001', 2),
-       (1, 'SKU002', 1),
-       (2, 'SKU003', 3),
-       (2, 'SKU001', 1),
-       (2, 'SKU002', 2),
-       (3, 'SKU001', 5),
-       (3, 'SKU002', 3),
-       (3, 'SKU003', 6),
-       (4, 'SKU003', 4),
-       (4, 'SKU001', 3),
-       (4, 'SKU002', 2),
-       (5, 'SKU001', 2),
-       (5, 'SKU002', 1),
-       (5, 'SKU003', 2),
-       (6, 'SKU003', 1),
-       (7, 'SKU003', 1),
-       (8, 'SKU003', 1),
-       (9, 'SKU003', 1),
-       (10, 'SKU003', 1);
+VALUES (1, 'TSH-000-S', 2),
+       (1, 'SHO-FFF-EU37', 1),
+       (2, 'GLO-FF0000-M', 3),
+       (2, 'TSH-000-S', 1),
+       (2, 'SHO-FFF-EU37', 2),
+       (3, 'TSH-000-S', 5),
+       (3, 'SHO-FFF-EU37', 3),
+       (3, 'GLO-FF0000-M', 6),
+       (4, 'GLO-FF0000-M', 4),
+       (4, 'TSH-000-S', 3),
+       (4, 'SHO-FFF-EU37', 2),
+       (5, 'TSH-000-S', 2),
+       (5, 'SHO-FFF-EU37', 1),
+       (5, 'GLO-FF0000-M', 2),
+       (6, 'GLO-FF0000-M', 1),
+       (7, 'GLO-FF0000-M', 1),
+       (8, 'GLO-FF0000-M', 1),
+       (9, 'GLO-FF0000-M', 1),
+       (10, 'GLO-FF0000-M', 1);
 
 COMMIT;
 
@@ -256,6 +256,6 @@ COMMIT;
 
 INSERT INTO supplier (TIN, name, address, SKU, date)
 VALUES
-  ('S1', 'Supplier 1', '4000-033 Porto', 'SKU001', '06-01-2022'),
-  ('S2', 'Supplier 2', '4000-033 Porto', 'SKU002', '08-01-2022'),
-  ('S4', 'Supplier 4', '4000-033 Porto', 'SKU001', '10-02-2022');
+  ('S1', 'Supplier 1', '4000-033 Porto', 'TSH-000-S', '06-01-2022'),
+  ('S2', 'Supplier 2', '4000-033 Porto', 'SHO-FFF-EU37', '08-01-2022'),
+  ('S4', 'Supplier 4', '4000-033 Porto', 'TSH-000-S', '10-02-2022');
